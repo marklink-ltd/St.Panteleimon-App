@@ -1,9 +1,13 @@
-import { Link, router } from "expo-router";
+import { Link, Redirect, router } from "expo-router";
 import { Text, View, SafeAreaView, Image } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import CustomButton from "../components/CustomButton";
+import { AuthProvider, useAuth } from "context/AuthContext";
+import { useEffect } from "react";
 
 export default function Index() {
+  const { authUser, loading } = useAuth();
+  if (!loading && authUser) return <Redirect href="/home" />;
   return (
     <SafeAreaView className="flex-1 bg-darkBlue">
       <StatusBar style="light" />
