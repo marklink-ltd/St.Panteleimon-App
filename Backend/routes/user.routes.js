@@ -1,12 +1,13 @@
 import express from "express";
 import { deleteUser, getUserById, updateUser } from "../controllers/user.controller.js";
+import isAuth from "../middleware/auth.js";
 
 const router = express.Router();
 
-router.get("/:userId", getUserById);
+router.get("/:userId", isAuth, getUserById);
 
-router.patch('/:userId', updateUser);
+router.patch('/:userId', isAuth, updateUser);
 
-router.delete('/:userId', deleteUser);
+router.delete('/:userId', isAuth, deleteUser);
 
 export default router;
