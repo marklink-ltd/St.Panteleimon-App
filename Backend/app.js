@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
 import session from 'express-session';
 import passport from 'passport';
+import cors from "cors"
 
 import authRoutes from './routes/auth.routes.js';
 import userRoutes from './routes/user.routes.js';
@@ -12,11 +13,11 @@ import connectToMongoDB from './db/connectToMongoDB.js';
 import "./passport/passport.js";
 
 dotenv.config();
-
 const app = express();
 const port = process.env.PORT || 5000;
 
 // Middleware
+app.use(cors({ origin: 'http://192.168.1.3:8081', credentials: true }));
 app.use(express.json());
 app.use(cookieParser());
 
