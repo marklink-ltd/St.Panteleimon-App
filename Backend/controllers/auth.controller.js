@@ -4,7 +4,7 @@ import generateTokenAndSetCookie from '../utils/generateToken.js';
 
 export const signup = async (req, res) => {
   try {
-    const { firstName, lastName, email, phoneNumber, password, confirmPassword, role } = req.body;
+    const { fullName, email, phoneNumber, password, confirmPassword } = req.body;
 
     // Checking if passwords match
     if (password !== confirmPassword) {
@@ -25,6 +25,10 @@ export const signup = async (req, res) => {
       return res.status(400).json({ error: 'User with that phone number already exists.' });
     }
 
+    const names = fullName.split(' ');
+    const firstName = names[0];
+    const lastName = names[1];
+
     // Hashing password
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
@@ -36,7 +40,7 @@ export const signup = async (req, res) => {
       email,
       phoneNumber,
       password: hashedPassword,
-      role,
+      role: 'user',
     });
 
     // Saving the new user
